@@ -1,0 +1,98 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building test-mail-srv 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.6.0:exec (npm install) @ test-mail-srv ---
+up to date in 2.403s
+[INFO] 
+[INFO] --- exec-maven-plugin:1.6.0:exec (npm run build) @ test-mail-srv ---
+
+> test-mail@1.0.0 build C:\Users\i320869\Desktop\test-mail
+> cds build/all --clean
+
+
+[cds] - cds [3.18.1], compiler [-- missing --], home [C:\Users\i320869\Desktop\test-mail\node_modules\@sap\cds]
+
+{
+  "build": {
+    "target": ".",
+    "tasks": [
+      {"for":"hana","src":"db","options":{"model":["db","srv"]}},
+      {"for":"java-cf","src":"srv","options":{"model":["db","srv"]}}
+    ]
+  }
+}
+
+[cds] - building project [C:\Users\i320869\Desktop\test-mail], clean [true]
+
+[cds] - building module [db] using [Hana DB Module Builder]
+[cds] - model: db\data-model.cds, srv\cat-service.cds
+
+[cds] - building module [srv] using [Java CF Module Builder]
+[cds] - model: db\data-model.cds, srv\cat-service.cds
+
+[cds] - done > wrote output to:
+  db\src\gen\.hdinamespace
+  db\src\gen\CATALOGSERVICE_AUTHORS.hdbcds
+  db\src\gen\CATALOGSERVICE_BOOKS.hdbcds
+  db\src\gen\CATALOGSERVICE_BOOKS_TEXTS.hdbcds
+  db\src\gen\CATALOGSERVICE_COUNTRIES.hdbcds
+  db\src\gen\CATALOGSERVICE_COUNTRIES_TEXTS.hdbcds
+  db\src\gen\CATALOGSERVICE_ORDERS.hdbcds
+  db\src\gen\LOCALIZED_CATALOGSERVICE_AUTHORS.hdbcds
+  db\src\gen\LOCALIZED_CATALOGSERVICE_BOOKS.hdbcds
+  db\src\gen\LOCALIZED_CATALOGSERVICE_COUNTRIES.hdbcds
+  db\src\gen\LOCALIZED_CATALOGSERVICE_ORDERS.hdbcds
+  db\src\gen\LOCALIZED_MY_BOOKSHOP_AUTHORS.hdbcds
+  db\src\gen\LOCALIZED_MY_BOOKSHOP_BOOKS.hdbcds
+  db\src\gen\LOCALIZED_MY_BOOKSHOP_ORDERS.hdbcds
+  db\src\gen\LOCALIZED_SAP_COMMON_COUNTRIES.hdbcds
+  db\src\gen\MY_BOOKSHOP_AUTHORS.hdbcds
+  db\src\gen\MY_BOOKSHOP_BOOKS.hdbcds
+  db\src\gen\MY_BOOKSHOP_BOOKS_TEXTS.hdbcds
+  db\src\gen\MY_BOOKSHOP_ORDERS.hdbcds
+  db\src\gen\SAP_COMMON_COUNTRIES.hdbcds
+  db\src\gen\SAP_COMMON_COUNTRIES_TEXTS.hdbcds
+  srv\src\main\resources\edmx\CatalogService.xml
+  srv\src\main\resources\edmx\CatalogService_de.xml
+  srv\src\main\resources\edmx\CatalogService_en.xml
+  srv\src\main\resources\edmx\csn.json
+[cds] - time: 4007.473ms
+[INFO] 
+[INFO] --- build-helper-maven-plugin:1.7:add-source (add-source) @ test-mail-srv ---
+[INFO] Source directory: C:\Users\i320869\Desktop\test-mail\srv\src\gen\java added.
+[INFO] 
+[INFO] --- cds4j-maven-plugin:1.3.0:generate (cds4j-generate-model) @ test-mail-srv ---
+[INFO] Class generation finished successfully
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ test-mail-srv ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 7 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ test-mail-srv ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 70 source files to C:\Users\i320869\Desktop\test-mail\srv\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ test-mail-srv ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\i320869\Desktop\test-mail\srv\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ test-mail-srv ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ test-mail-srv ---
+[INFO] 
+[INFO] --- maven-jar-plugin:3.1.2:jar (default-jar) @ test-mail-srv ---
+[INFO] Building jar: C:\Users\i320869\Desktop\test-mail\srv\target\test-mail-srv-1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.1.6.RELEASE:repackage (repackage) @ test-mail-srv ---
+[INFO] Replacing main artifact with repackaged archive
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 59.529 s
+[INFO] Finished at: 2019-10-20T09:53:15+08:00
+[INFO] Final Memory: 48M/428M
+[INFO] ------------------------------------------------------------------------

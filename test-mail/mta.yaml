@@ -1,0 +1,87 @@
+ID: test-mail
+_schema-version: "2.1"
+version: 0.0.1
+modules:
+  - name: test-mail-approuter
+    type: nodejs
+    path: approuter
+    provides:
+     - name: app-destination
+       properties:
+          url: ${default-url}
+    parameters:
+       disk-quota: 256M
+       memory: 256M
+    requires:
+       - name: test-mail-uaa
+       - name: srv_api
+         group: destinations
+         properties:
+           name: srv_api
+           url: '~{url}'
+           forwardAuthToken: true
+  - name: test-mail-db
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      disk-quota: 256M
+      buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.42
+    requires:
+      - name: test-mail-db-hdi-container
+  - name: test-mail-srv
+    type: java
+    path: srv
+    parameters:
+      memory: 1024M
+      disk-quota: 256M
+    properties:
+      SPRING_PROFILES_ACTIVE: cloud
+      JBP_CONFIG_JAVA_OPTS: [java_opts: '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 ']
+      SAP_JWT_TRUST_ACL:
+        - clientid: "*"
+          identityzone: "*"
+    build-parameters:
+        ignore: ["*.md"]
+        build-result: target/*.jar
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: test-mail-uaa
+      - name: test-mail-logs
+      - name: test-mail-db-hdi-container
+        properties:
+          db_service_instance_name: ~{hdi-container-name}
+#          JBP_CONFIG_RESOURCE_CONFIGURATION: '[tomcat/webapps/ROOT/META-INF/context.xml:
+#            {"service_name_for_DefaultDB" : "~{hdi-container-name}"}]'
+resources:
+  - name: test-mail-logs
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: application-logs
+      service-plan: lite
+  - name: test-mail-db-hdi-container
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: ${service-name}
+  - name: test-mail-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      config:
+        xsappname: control
+        tenant-mode: dedicated
+        scopes:
+         - name: $XSAPPNAME.Callback    # grant this scope to onboarding infrastructure
+           grant-as-authority-to-apps: 
+            - $XSAPPNAME(application,sap-provisioning,tenant-onboarding)
+         - name: $XSAPPNAME.admin
+           description: Mail administrator
+        role-templates:
+         - name: mialAdmin
+           scope-references:
+            - $XSAPPNAME.admin
+
